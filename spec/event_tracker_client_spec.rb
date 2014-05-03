@@ -61,9 +61,20 @@ describe EventTrackerClient do
                 "external_user_id" => user_ids[3],
               }].to_json
       }}).once
+      expect(Typhoeus::Request).to receive(:post).with("http://#{host}:#{port}/events/batch_track", { 
+        :body => { 
+          "events" => [
+              {
+                "foo5" => "bar5",
+                "event_type" => event_types[4],
+                "external_user_id" => user_ids[4],
+              }].to_json
+      }}).once
+
       (0..4).each do |i|
         event_tracker_client.track(event_types[i], user_ids[i], event_properties[i])
       end
+      event_tracker_client.flush
     end
   end
 

@@ -31,6 +31,11 @@ module EventTrackerClient
       end
     end
   
+    def flush
+      client.send_request("events/batch_track", { "events" => queue.to_json })
+      @queue = []
+    end
+
     def alias(from_id, to_id)
       client.alias(from_id, to_id)
     end

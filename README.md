@@ -26,7 +26,7 @@ event_tracker_client.track(event_type, user_id, event_properties)
 event_tracker_client.alias(from_id, to_id)
 ```
 
-If there are the throughput of EventTrackerClient::EventTrackerClient is not good enough, consider using EventTrackerClient::BatchEventTrackerClient which batch send the requests.
+If the throughput from EventTrackerClient::EventTrackerClient is not good enough, consider using EventTrackerClient::BatchEventTrackerClient which batch send the requests. Please notice that you need to explicitly flush the BatchEventTrackerClient when your service is shutting down or there might be events buffered in the queue and those events might not get sent to the event tracker server.
 
 ```ruby
 base_event_tracker_client = EventTrackerClient::EventTrackerClient.new(host, port, EventTrackerClient::Worker.new)
@@ -35,6 +35,7 @@ batch_size = 10
 batch_event_tracker_client = EventTrackerClient::BatchEventTrackerClient.new(base_event_tracker_client, queue, batch_size)
 event_tracker_client.track(event_type, user_id, event_properties)
 event_tracker_client.alias(from_id, to_id)
+event_tracker_client.flush
 ```
 
 ## Contributing
