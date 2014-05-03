@@ -1,11 +1,38 @@
 require "event_tracker_client/version"
 require "net/http"
 require "typhoeus"
+require 'json'
 
 module EventTrackerClient
   class Worker
     def perform(url, body)
       Typhoeus::Request.post(url, body: body)
+    end
+  end
+
+  class BatchEventTrackerClient
+    attr_reader :client, :queue, :batch_size
+
+    def initialize(client, queue, batch_size)
+      @client = client
+      @queue = queue
+      @batch_size = batch_size
+    end
+
+    def track(event_type, user_id, event_properties)
+      params = {}.merge(event_properties).merge({
+        "event_type" => event_type,
+        "external_user_id" => user_id,
+      })
+      queue.push(params)
+      if queue.size % batch_size == 0
+        client.send_request("events/batch_track", { "events" => queue.to_json })
+        @queue = []
+      end
+    end
+  
+    def alias(from_id, to_id)
+      client.alias(from_id, to_id)
     end
   end
 
@@ -38,8 +65,6 @@ module EventTrackerClient
   
       send_request(path, params)
     end
-  
-    private
   
     def send_request(path, body)
       worker.perform("http://#{@host}:#{@port}/#{path}", body)
