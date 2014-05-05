@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Cheng-Tao Chu"]
   spec.email         = ["chengtao@codecademy.com"]
   spec.summary       = %q{Client for EventHub.}
-  spec.description   = %q{More details of EventHub available at http://github.com/Codecademy/EventHub.}
+  spec.description   = %q{More details of EventHub available at http://github.com/Codecademy/EventHubClient.}
   spec.homepage      = ""
   spec.license       = "MIT"
 

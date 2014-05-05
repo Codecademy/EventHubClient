@@ -18,7 +18,7 @@ Or install it yourself as:
 
 ## Usage
 
-By the nature of the gem is supposed be used from the backend, The gem only supports two apis, track and alias. More details of about EventHub can be found at https://github.com/Codecademy/EventHub/
+By the nature of the gem is supposed be used from the backend, The gem only supports two apis, track and alias. More details of about EventHub can be found at https://github.com/Codecademy/EventHubClient/
 
 ```ruby
 event_hub_client = EventHubClient::EventHubClient.new(host, port, EventHubClient::Worker.new)
