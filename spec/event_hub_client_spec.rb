@@ -1,15 +1,15 @@
 require "spec_helper"
 
-describe EventTrackerClient do
+describe EventHubClient do
   let(:host) { "localhost" }
   let(:port) { 3000 }
 
-  context "for BatchEventTrackerClient" do
+  context "for BatchEventHubClient" do
     let(:queue) { Array.new }
     let(:batch_size) { 2 }
-    let(:event_tracker_client) {
-      EventTrackerClient::BatchEventTrackerClient.new(
-        EventTrackerClient::EventTrackerClient.new(host, port, EventTrackerClient::Worker.new), queue, batch_size)
+    let(:event_hub_client) {
+      EventHubClient::BatchEventHubClient.new(
+        EventHubClient::EventHubClient.new(host, port, EventHubClient::Worker.new), queue, batch_size)
     }
 
     it "send direct http request when alias" do
@@ -21,7 +21,7 @@ describe EventTrackerClient do
           "from_external_user_id" => from_id,
           "to_external_user_id" => to_id
       }}).once
-      event_tracker_client.alias(from_id, to_id)
+      event_hub_client.alias(from_id, to_id)
     end
 
     it "batch track requests" do
@@ -72,15 +72,15 @@ describe EventTrackerClient do
       }}).once
 
       (0..4).each do |i|
-        event_tracker_client.track(event_types[i], user_ids[i], event_properties[i])
+        event_hub_client.track(event_types[i], user_ids[i], event_properties[i])
       end
-      event_tracker_client.flush
+      event_hub_client.flush
     end
   end
 
-  context "for EventTrackerClient" do
-    let(:event_tracker_client) {
-      EventTrackerClient::EventTrackerClient.new(host, port, EventTrackerClient::Worker.new)
+  context "for EventHubClient" do
+    let(:event_hub_client) {
+      EventHubClient::EventHubClient.new(host, port, EventHubClient::Worker.new)
     }
 
     it "send direct http request when alias" do
@@ -92,7 +92,7 @@ describe EventTrackerClient do
           "from_external_user_id" => from_id,
           "to_external_user_id" => to_id
       }}).once
-      event_tracker_client.alias(from_id, to_id)
+      event_hub_client.alias(from_id, to_id)
     end
 
     it "send direct http request when track" do
@@ -106,7 +106,7 @@ describe EventTrackerClient do
           "external_user_id" => user_id,
           "foo" => "bar"
       }}).once
-      event_tracker_client.track(event_type, user_id, event_properties)
+      event_hub_client.track(event_type, user_id, event_properties)
     end
   end
 end

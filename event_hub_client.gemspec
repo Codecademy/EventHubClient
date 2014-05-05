@@ -1,15 +1,15 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'event_tracker_client/version'
+require 'event_hub_client/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "event_tracker_client"
-  spec.version       = EventTrackerClient::VERSION
+  spec.name          = "event_hub_client"
+  spec.version       = EventHubClient::VERSION
   spec.authors       = ["Cheng-Tao Chu"]
   spec.email         = ["chengtao@codecademy.com"]
-  spec.summary       = %q{Client for EventTracker.}
-  spec.description   = %q{More details of EventTracker available at http://github.com/Codecademy/EventTracker.}
+  spec.summary       = %q{Client for EventHub.}
+  spec.description   = %q{More details of EventHub available at http://github.com/Codecademy/EventHub.}
   spec.homepage      = ""
   spec.license       = "MIT"
 
