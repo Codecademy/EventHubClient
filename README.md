@@ -18,7 +18,7 @@ Or install it yourself as:
 
 ## Usage
 
-By the nature of the gem is supposed be used from the backend, The gem only supports two apis, track and alias. More details of about EventHub can be found at https://github.com/Codecademy/EventHubClient/
+This gem supports two EventHub api calls - track and alias. More details of about EventHub can be found at https://github.com/Codecademy/EventHubClient/
 
 ```ruby
 event_hub_client = EventHubClient::EventHubClient.new(host, port, EventHubClient::Worker.new)
@@ -26,7 +26,7 @@ event_hub_client.track(event_type, user_id, event_properties)
 event_hub_client.alias(from_id, to_id)
 ```
 
-If the throughput from EventHubClient::EventHubClient is not good enough, consider using EventHubClient::BatchEventHubClient which batch send the requests. Please notice that you need to explicitly flush the BatchEventHubClient when your service is shutting down or there might be events buffered in the queue and those events might not get sent to the event hub server.
+If the throughput from EventHubClient::EventHubClient is not good enough, consider using EventHubClient::BatchEventHubClient which will batch send the requests. Please note that you need to explicitly flush the BatchEventHubClient when your service is shutting down or there may be events buffered in the queue that will not be sent to the event hub server.
 
 ```ruby
 base_event_hub_client = EventHubClient::EventHubClient.new(host, port, EventHubClient::Worker.new)
